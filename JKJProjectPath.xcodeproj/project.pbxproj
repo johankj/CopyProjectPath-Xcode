@@ -43,9 +43,9 @@
 			isa = PBXGroup;
 			children = (
 				04D37EE91BB7DE8A007B50C0 /* JKJProjectPath.h */,
+				04D37EEA1BB7DE8A007B50C0 /* JKJProjectPath.m */,
 				04D37EEE1BB7E387007B50C0 /* JKJButtonViewController.h */,
 				04D37EEF1BB7E387007B50C0 /* JKJButtonViewController.m */,
-				04D37EEA1BB7DE8A007B50C0 /* JKJProjectPath.m */,
 				04DB02D91BB70C9E00669549 /* Info.plist */,
 				04DB02D21BB70C9E00669549 /* Supporting Files */,
 			);
