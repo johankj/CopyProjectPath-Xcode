@@ -44,3 +44,7 @@ Both approaches gave me a little information but nothing I really could use. It 
 Then I could use [Hopper](http://hopperapp.com/) to disassemble IDEKit.framework and DVTKit.framework and see how the interesting methods were used.
 
 Finally I also swizzled various methods to have a look at the arguments given to them and to get call other instance methods.
+
+## License
+
+MIT License. See LICENSE.md for the full license.
