@@ -143,34 +143,11 @@ static NSString *JKJProjectPathButtonIdentifier = @"JKJProjectPathButtonIdentifi
     exterminatorItem.label = @"CopyProjectPath";
     exterminatorItem.maxSize = NSMakeSize(32, 25);
     
-//    if ([self shouldUseRoundedToolbarButtonStyle]) {
-
-//        NSButton *button = [[NSButton alloc] init];
-//        button.image = image;
-//        button.action = @selector(copyProjectPath);
-//        button.target = self;
-//        button.bezelStyle = NSTexturedRoundedBezelStyle;
-//        exterminatorItem.view = button;
-    NSMenu *theMenu = [[NSMenu alloc] initWithTitle:@"Contextual Menu"];
-    NSMenuItem *item1 = [theMenu addItemWithTitle:@"Copy Project Path" action:@selector(copyProjectPath) keyEquivalent:@""];
-    item1.target = self;
-    
-    NSMenuItem *item2 = [theMenu addItemWithTitle:@"Reveal Project in Finder" action:@selector(revealProjectInFinder) keyEquivalent:@""];
-    item2.target = self;
-    
-    NSMenuItem *item3 = [theMenu addItemWithTitle:@"Open Project in Terminal" action:@selector(openProjectInTerminal) keyEquivalent:@""];
-    item3.target = self;
-    
-    NSMenuItem *item3alt = [theMenu addItemWithTitle:@"Open Project in iTerm" action:@selector(openProjectIniTerm) keyEquivalent:@""];
-    item3alt.target = self;
-    item3alt.alternate = YES;
-    item3alt.keyEquivalentModifierMask = NSAlternateKeyMask;
-    
     
 // Alternatively, for a simple toolbarButton: +[NSButton dvt_toolbarButtonWithImage:buttonType:]:
 //    NSButton *button = [NSPopUpButton dvt_toolbarPopUpButtonWithMenu:theMenu buttonType:NSTexturedRoundedBezelStyle];
     NSButton *button = [NSClassFromString(@"DVTDelayedMenuButton") new];
-    [button setMenu:theMenu];
+    [button setMenu:[self createMenu]];
     NSImage *downArrow = [NSImage dvt_cachedImageNamed:@"smallPullDownArrow" fromBundleForClass:NSClassFromString(@"DVTImagePopUpButtonCell")];
     [[button cell] setArrowImage:downArrow];
     [button setShowsMenuIndcatorOnlyWhileMouseInside:YES];
@@ -192,6 +169,24 @@ static NSString *JKJProjectPathButtonIdentifier = @"JKJProjectPathButtonIdentifi
     Class buttonVC = [JKJButtonViewController class]; // Instead of DVTGenericButtonViewController as we don’t use a nib-file and that causes a crash on exit
     [exterminatorItem setValue:[[buttonVC alloc] initWithNibName:nil bundle:nil] forKey:@"viewController"];
     return exterminatorItem;
+}
+
+- (NSMenu*)createMenu {
+    NSMenu *theMenu = [[NSMenu alloc] initWithTitle:@"Contextual Menu"];
+    NSMenuItem *item1 = [theMenu addItemWithTitle:@"Copy Project Path" action:@selector(copyProjectPath) keyEquivalent:@""];
+    item1.target = self;
+    
+    NSMenuItem *item2 = [theMenu addItemWithTitle:@"Reveal Project in Finder" action:@selector(revealProjectInFinder) keyEquivalent:@""];
+    item2.target = self;
+    
+    NSMenuItem *item3 = [theMenu addItemWithTitle:@"Open Project in Terminal" action:@selector(openProjectInTerminal) keyEquivalent:@""];
+    item3.target = self;
+    
+    NSMenuItem *item3alt = [theMenu addItemWithTitle:@"Open Project in iTerm" action:@selector(openProjectIniTerm) keyEquivalent:@""];
+    item3alt.target = self;
+    item3alt.alternate = YES;
+    item3alt.keyEquivalentModifierMask = NSAlternateKeyMask;
+    return theMenu;
 }
 
 - (void)copyProjectPath {
