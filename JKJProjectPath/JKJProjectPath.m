@@ -142,28 +142,8 @@ static NSString *JKJProjectPathButtonIdentifier = @"JKJProjectPathButtonIdentifi
     exterminatorItem.toolTip = @"Copy Project Path";
     exterminatorItem.label = @"CopyProjectPath";
     exterminatorItem.maxSize = NSMakeSize(32, 25);
-    
-    
-// Alternatively, for a simple toolbarButton: +[NSButton dvt_toolbarButtonWithImage:buttonType:]:
-//    NSButton *button = [NSPopUpButton dvt_toolbarPopUpButtonWithMenu:theMenu buttonType:NSTexturedRoundedBezelStyle];
-    NSButton *button = [NSClassFromString(@"DVTDelayedMenuButton") new];
-    [button setMenu:[self createMenu]];
-    NSImage *downArrow = [NSImage dvt_cachedImageNamed:@"smallPullDownArrow" fromBundleForClass:NSClassFromString(@"DVTImagePopUpButtonCell")];
-    [[button cell] setArrowImage:downArrow];
-    [button setShowsMenuIndcatorOnlyWhileMouseInside:YES];
-    [[button cell] setUseNSButtonImageDrawing:YES];
-    [[button cell] setMenuIndicatorInset:CGPointMake(1, 2)];
-    [[button cell] setBordered:YES];
-    [[button cell] setBezelStyle:NSTexturedRoundedBezelStyle]; // This one is especially important unless you miss the ‘90s. :p
-    [[button cell] setImageScaling:NSImageScaleNone];
-    [[button cell] setImagePosition:NSImageOnly];
-    
-    // There’s some nice icons in /Applications/Xcode.app/Contents/SharedFrameworks/DVTKit.framework/Versions/A/Resources/
-    NSImage *activeImage = [NSImage dvt_cachedImageNamed:@"DVTInFieldCopyToClipboard" fromBundleForClass:NSClassFromString(@"DVTTheme")];
-    activeImage.template = YES;
-    [[button cell] setActiveImage:activeImage];
 
-    exterminatorItem.view = button;
+    exterminatorItem.view = [self createButton];
     
 //    Class buttonVC = NSClassFromString(@"DVTGenericButtonViewController");
     Class buttonVC = [JKJButtonViewController class]; // Instead of DVTGenericButtonViewController as we don’t use a nib-file and that causes a crash on exit
@@ -187,6 +167,28 @@ static NSString *JKJProjectPathButtonIdentifier = @"JKJProjectPathButtonIdentifi
     item3alt.alternate = YES;
     item3alt.keyEquivalentModifierMask = NSAlternateKeyMask;
     return theMenu;
+}
+
+- (NSButton*)createButton {
+    // Alternatively, for a simple toolbarButton: +[NSButton dvt_toolbarButtonWithImage:buttonType:]:
+    //    NSButton *button = [NSPopUpButton dvt_toolbarPopUpButtonWithMenu:theMenu buttonType:NSTexturedRoundedBezelStyle];
+    NSButton *button = [NSClassFromString(@"DVTDelayedMenuButton") new];
+    [button setMenu:[self createMenu]];
+    NSImage *downArrow = [NSImage dvt_cachedImageNamed:@"smallPullDownArrow" fromBundleForClass:NSClassFromString(@"DVTImagePopUpButtonCell")];
+    [[button cell] setArrowImage:downArrow];
+    [button setShowsMenuIndcatorOnlyWhileMouseInside:YES];
+    [[button cell] setUseNSButtonImageDrawing:YES];
+    [[button cell] setMenuIndicatorInset:CGPointMake(1, 2)];
+    [[button cell] setBordered:YES];
+    [[button cell] setBezelStyle:NSTexturedRoundedBezelStyle]; // This one is especially important unless you miss the ‘90s. :p
+    [[button cell] setImageScaling:NSImageScaleNone];
+    [[button cell] setImagePosition:NSImageOnly];
+    
+    // There’s some nice icons in /Applications/Xcode.app/Contents/SharedFrameworks/DVTKit.framework/Versions/A/Resources/
+    NSImage *activeImage = [NSImage dvt_cachedImageNamed:@"DVTInFieldCopyToClipboard" fromBundleForClass:NSClassFromString(@"DVTTheme")];
+    activeImage.template = YES;
+    [[button cell] setActiveImage:activeImage];
+    return button;
 }
 
 - (void)copyProjectPath {
