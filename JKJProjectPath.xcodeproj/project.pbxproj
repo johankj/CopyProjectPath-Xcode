@@ -11,7 +11,6 @@
 		04D37EED1BB7E275007B50C0 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D37EEC1BB7E275007B50C0 /* icon.png */; settings = {ASSET_TAGS = (); }; };
 		04D37EF01BB7E387007B50C0 /* JKJButtonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D37EEF1BB7E387007B50C0 /* JKJButtonViewController.m */; settings = {ASSET_TAGS = (); }; };
 		04DB02D41BB70C9E00669549 /* JKJProjectPath.xcscheme in Resources */ = {isa = PBXBuildFile; fileRef = 04DB02D31BB70C9E00669549 /* JKJProjectPath.xcscheme */; };
-		04DB02D81BB70C9E00669549 /* NSObject_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DB02D71BB70C9E00669549 /* NSObject_Extension.swift */; };
 		04DB02E51BB71D5000669549 /* Aspects.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DB02E41BB71D5000669549 /* Aspects.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
@@ -23,11 +22,7 @@
 		04D37EEF1BB7E387007B50C0 /* JKJButtonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKJButtonViewController.m; sourceTree = "<group>"; };
 		04DB02CF1BB70C9E00669549 /* JKJProjectPath.xcplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JKJProjectPath.xcplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		04DB02D31BB70C9E00669549 /* JKJProjectPath.xcscheme */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = JKJProjectPath.xcscheme; path = JKJProjectPath.xcodeproj/xcshareddata/xcschemes/JKJProjectPath.xcscheme; sourceTree = SOURCE_ROOT; };
-		04DB02D71BB70C9E00669549 /* NSObject_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSObject_Extension.swift; sourceTree = "<group>"; };
 		04DB02D91BB70C9E00669549 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		04DB02DF1BB71D2100669549 /* JKJProjectPath-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "JKJProjectPath-Bridging-Header.h"; sourceTree = "<group>"; };
-		04DB02E01BB71D2200669549 /* JKJProjectPath2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKJProjectPath2.h; sourceTree = "<group>"; };
-		04DB02E11BB71D2200669549 /* JKJProjectPath2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKJProjectPath2.m; sourceTree = "<group>"; };
 		04DB02E31BB71D5000669549 /* Aspects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Aspects.h; sourceTree = "<group>"; };
 		04DB02E41BB71D5000669549 /* Aspects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Aspects.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -52,19 +47,15 @@
 		04DB02D11BB70C9E00669549 /* JKJProjectPath */ = {
 			isa = PBXGroup;
 			children = (
-				04DB02E01BB71D2200669549 /* JKJProjectPath2.h */,
-				04DB02E11BB71D2200669549 /* JKJProjectPath2.m */,
 				04D37EE91BB7DE8A007B50C0 /* JKJProjectPath.h */,
 				04D37EEE1BB7E387007B50C0 /* JKJButtonViewController.h */,
 				04D37EEF1BB7E387007B50C0 /* JKJButtonViewController.m */,
 				04D37EEA1BB7DE8A007B50C0 /* JKJProjectPath.m */,
 				04DB02E31BB71D5000669549 /* Aspects.h */,
 				04DB02E41BB71D5000669549 /* Aspects.m */,
-				04DB02D71BB70C9E00669549 /* NSObject_Extension.swift */,
 				04D37EEC1BB7E275007B50C0 /* icon.png */,
 				04DB02D91BB70C9E00669549 /* Info.plist */,
 				04DB02D21BB70C9E00669549 /* Supporting Files */,
-				04DB02DF1BB71D2100669549 /* JKJProjectPath-Bridging-Header.h */,
 			);
 			path = JKJProjectPath;
 			sourceTree = "<group>";
@@ -146,7 +137,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04DB02D81BB70C9E00669549 /* NSObject_Extension.swift in Sources */,
 				04D37EEB1BB7DE8A007B50C0 /* JKJProjectPath.m in Sources */,
 				04DB02E51BB71D5000669549 /* Aspects.m in Sources */,
 				04D37EF01BB7E387007B50C0 /* JKJButtonViewController.m in Sources */,
@@ -243,7 +233,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = com.johankj.JKJProjectPath;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "JKJProjectPath/JKJProjectPath-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = xcplugin;
 			};
@@ -263,7 +253,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = com.johankj.JKJProjectPath;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "JKJProjectPath/JKJProjectPath-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				WRAPPER_EXTENSION = xcplugin;
 			};
 			name = Release;
