@@ -24,6 +24,16 @@ Press-and-hold the button to change to another action.
 Tip: Hold the Alt-key down to reveal an option for opening in iTerm.
 
 
+## New Xcode releases
+
+When a new version of Xcode is released the plug-in is disabled by Xcode.  
+If you want to enable it again you can run the following Terminal command. It writes the DVTPlugInCompatibilityUUID of the Xcode version in /Applications/Xcode.app into the Info.plist of this plug-in.  
+Feel free to submit a pull-request if a new Xcode version is out, and the plug-in still works.
+
+```
+$ find ~/Library/Application\ Support/Developer/Shared/Xcode/Plug-ins/JKJProjectPath.xcplugin -name Info.plist | xargs -I{} defaults write {} DVTPlugInCompatibilityUUIDs -array-add `defaults read /Applications/Xcode.app/Contents/Info DVTPlugInCompatibilityUUID`
+```
+
 ## How it was build
 
 The plug-in doesn’t interfere too much with Xcode, but it still took me quite a while to figure out how to add a toolbar button to the main toolbar of Xcode.
@@ -44,6 +54,8 @@ Both approaches gave me a little information but nothing I really could use. It 
 Then I could use [Hopper](http://hopperapp.com/) to disassemble IDEKit.framework and DVTKit.framework and see how the interesting methods were used.
 
 Finally I also swizzled various methods to have a look at the arguments given to them and to get call other instance methods.
+
+The Xcode-project itself is based on the [Xcode-template for Xcode Plug-ins](https://github.com/kattrali/Xcode-Plugin-Template).
 
 ## License
 
