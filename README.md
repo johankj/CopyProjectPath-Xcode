@@ -22,3 +22,25 @@ Click on the toolbar button to activate the current action.
 Press-and-hold the button to change to another action.
 
 Tip: Hold the Alt-key down to reveal an option for opening in iTerm.
+
+
+## How it was build
+
+The plug-in doesn’t interfere too much with Xcode, but it still took me quite a while to figure out how to add a toolbar button to the main toolbar of Xcode.
+
+I started out with the only post on [reverse engineering Xcode](http://chen.do/blog/2013/10/22/reverse-engineering-xcode-with-dtrace/) and setup dtrace scripts as the following, to log all Objective-C messages and see if any of them were looking interesting.
+
+```
+sudo dtrace -q -n 'objc[PID]:[CLASS]:[+/-][METHOD]:entry { printf("%s %s\n", probemod, probefunc); }' > xcode.txt
+# If you leave [CLASS] and [+/-][METHOD] empty, you log all Objective-C messages.
+# Example of usage:
+sudo dtrace -q -n 'objc70755::-toolbar?itemForItemIdentifier?willBeInsertedIntoToolbar?:entry { printf("%s %s\n", probemod, probefunc); }' > xcode.txt
+```
+
+As the logfile quickly grew, because basically every single ObjC call gets called, I decided to look into some of the NSNotifications and see if any of them had some clues.
+
+Both approaches gave me a little information but nothing I really could use. It was searching through header-files from class-dumps of the Xcode frameworks (there exists many repositories on GitHub) and using [Interface Inspector](http://www.interface-inspector.com/) that pointed me to some interesting classes.
+
+Then I could use [Hopper](http://hopperapp.com/) to disassemble IDEKit.framework and DVTKit.framework and see how the interesting methods were used.
+
+Finally I also swizzled various methods to have a look at the arguments given to them and to get call other instance methods.
