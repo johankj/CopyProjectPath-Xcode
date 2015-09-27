@@ -9,40 +9,42 @@
 #import "JKJProjectPath.h"
 #import "JKJButtonViewController.h"
 
+#pragma mark Xcode Interfaces
+
+// The following interfaces already have implementation in Xcode (DVTKit or IDEKit).
+// They are only declared here so we can compile the code.
+// I’ve tried to declare them as a category on their super-class.
+
 @interface NSObject (IDEWorkspaceWindowController)
 + (id)workspaceWindowControllers;
 @end
 
-@interface NSObject (DVTViewControllerToolbarItem)
-+ (instancetype)alloc;
-- (id)initWithItemIdentifier:(NSString*)identifier;
-- (NSArray*)allowedItemIdentifiers;
-- (NSDictionary*)toolbarItemProviders;
+@interface NSObject (IDEToolbarDelegate)
+@property(copy) NSArray *allowedItemIdentifiers;
+@property(copy) NSDictionary *toolbarItemProviders;
 @end
 
 @interface NSPopUpButton (DVTToolbarViewControllerAdditions)
-+ (id)dvt_toolbarPopUpButtonWithMenu:(id)arg1 buttonType:(unsigned long long)arg2;
++ (id)dvt_toolbarPopUpButtonWithMenu:(NSMenu*)menu buttonType:(NSBezelStyle)style;
 @end
 
 @interface NSButton (DVTDelayedMenuButton)
-- (void)setMenu:(NSMenu*)menu;
 @property(nonatomic) BOOL showsMenuIndcatorOnlyWhileMouseInside;
+- (void)setMenu:(NSMenu*)menu;
 @end
 
-@interface NSObject (DVTDelayedMenuButtonCell)
-- (void)setArrowImage:(NSImage*)image;
+@interface NSCell (DVTDelayedMenuButtonCell)
 @property struct CGPoint menuIndicatorInset;
+@property BOOL useNSButtonImageDrawing;
+- (void) setActiveImage:(NSImage*)image;
+- (void) setArrowImage:(NSImage*)image;
 @end
 
-@interface NSImage ()
+@interface NSImage (DVTKit)
 + (instancetype) dvt_cachedImageNamed:(NSString*)name fromBundleForClass:(Class)cls;
 @end
 
-@interface NSCell ()
-- (void) setActiveImage:(NSImage*)image;
-@property BOOL useNSButtonImageDrawing;
-@end
-
+#pragma mark - JKJProjectPath
 
 @interface JKJProjectPath ()
 @property (nonatomic, retain) NSBundle *bundle;
@@ -61,7 +63,6 @@ static NSString *JKJProjectPathButtonIdentifier = @"JKJProjectPathButtonIdentifi
     });
 }
 
-
 - (id)init {
     if (self = [super init]) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateToolbar) name:NSWindowDidBecomeKeyNotification object:nil];
@@ -71,7 +72,6 @@ static NSString *JKJProjectPathButtonIdentifier = @"JKJProjectPathButtonIdentifi
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
-//    [self createMenuItems];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSApplicationDidFinishLaunchingNotification object:nil];
 }
 
@@ -79,14 +79,9 @@ static NSString *JKJProjectPathButtonIdentifier = @"JKJProjectPathButtonIdentifi
 - (void)updateToolbar {
     @try {
         NSArray *workspaceWindowControllers = [NSClassFromString(@"IDEWorkspaceWindowController") workspaceWindowControllers];
-//        BOOL shouldShowButton = [self isButtonEnabled];
         for (NSWindow *window in [workspaceWindowControllers valueForKey:@"window"]) {
-            NSLog(@"%@", window);
             [self registerToolbarButtonAndProviderForWindow:window];
-//            if (shouldShowButton)
-                [self insertToolbarButtonForWindow:window];
-//            else
-//                [self removeToolbarButtonForWindow:window];
+            [self insertToolbarButtonForWindow:window];
         }
     }
     @catch (NSException *exception) {}
@@ -104,19 +99,15 @@ static NSString *JKJProjectPathButtonIdentifier = @"JKJProjectPathButtonIdentifi
     }
 }
 
-
-
 - (void)insertToolbarButtonForWindow:(NSWindow*)window {
     for (NSToolbarItem *item in window.toolbar.items) {
         if ([item.itemIdentifier isEqualToString:JKJProjectPathButtonIdentifier])
             return;
     }
-    NSInteger index = MAX(0, window.toolbar.items.count - 1);
-    index = 3;
+    NSInteger index = 3;
     [window.toolbar insertItemWithItemIdentifier:JKJProjectPathButtonIdentifier
                                          atIndex:index];
 }
-
 
 - (void)removeToolbarButtonForWindow:(NSWindow*)window {
     NSInteger index = NSNotFound;
@@ -135,14 +126,12 @@ static NSString *JKJProjectPathButtonIdentifier = @"JKJProjectPathButtonIdentifi
 - (id)toolbarItemForToolbarInWindow:(NSWindow*)window {
     Class DVTViewControllerToolbarItem = NSClassFromString(@"DVTViewControllerToolbarItem");
     NSToolbarItem *exterminatorItem = (NSToolbarItem*)[[DVTViewControllerToolbarItem alloc] initWithItemIdentifier:JKJProjectPathButtonIdentifier];
-    NSImage *image = [[NSImage alloc] initByReferencingFile:[self.bundle pathForResource:@"icon" ofType:@"png"]];
-    image.template = YES;
     
     exterminatorItem.target = self;
     exterminatorItem.toolTip = @"Copy Project Path";
     exterminatorItem.label = @"CopyProjectPath";
+    // Interface Inspector.app says that the other icons have a height of 25, so…
     exterminatorItem.maxSize = NSMakeSize(32, 25);
-
     exterminatorItem.view = [self createButton];
     
 //    Class buttonVC = NSClassFromString(@"DVTGenericButtonViewController");
@@ -150,6 +139,8 @@ static NSString *JKJProjectPathButtonIdentifier = @"JKJProjectPathButtonIdentifi
     [exterminatorItem setValue:[[buttonVC alloc] initWithNibName:nil bundle:nil] forKey:@"viewController"];
     return exterminatorItem;
 }
+
+#pragma mark - Factories
 
 - (NSMenu*)createMenu {
     NSMenu *theMenu = [[NSMenu alloc] initWithTitle:@"Contextual Menu"];
@@ -170,8 +161,15 @@ static NSString *JKJProjectPathButtonIdentifier = @"JKJProjectPathButtonIdentifi
 }
 
 - (NSButton*)createButton {
-    // Alternatively, for a simple toolbarButton: +[NSButton dvt_toolbarButtonWithImage:buttonType:]:
-    //    NSButton *button = [NSPopUpButton dvt_toolbarPopUpButtonWithMenu:theMenu buttonType:NSTexturedRoundedBezelStyle];
+    // Here we create a DVTDelayedMenuButton
+    // It has the same functionality as the Run-button, where you can press-and-hold
+    // to get a menu with more options.
+    
+    // If only a toolbarButton is required, the method +[NSButton dvt_toolbarButtonWithImage:buttonType:]
+    // is a good choice.
+    // The Scheme-selector seems to be something like the following
+    // +[NSPopUpButton dvt_toolbarPopUpButtonWithMenu:buttonType:]
+    
     NSButton *button = [NSClassFromString(@"DVTDelayedMenuButton") new];
     [button setMenu:[self createMenu]];
     NSImage *downArrow = [NSImage dvt_cachedImageNamed:@"smallPullDownArrow" fromBundleForClass:NSClassFromString(@"DVTImagePopUpButtonCell")];
@@ -190,6 +188,9 @@ static NSString *JKJProjectPathButtonIdentifier = @"JKJProjectPathButtonIdentifi
     [[button cell] setActiveImage:activeImage];
     return button;
 }
+
+
+#pragma mark - MenuActions
 
 - (void)copyProjectPath {
     NSString *workspacePath = [self getWorkspacePath];
@@ -219,6 +220,8 @@ static NSString *JKJProjectPathButtonIdentifier = @"JKJProjectPathButtonIdentifi
         [NSTask launchedTaskWithLaunchPath:@"/usr/bin/open" arguments:@[@"-a", @"iTerm", workspacePath]];
     }
 }
+
+#pragma mark - Helpers
 
 - (NSString*)getWorkspacePath {
     NSArray *workspaceWindowControllers = [NSClassFromString(@"IDEWorkspaceWindowController") valueForKey:@"workspaceWindowControllers"];

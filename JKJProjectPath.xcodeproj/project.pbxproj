@@ -8,23 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		04D37EEB1BB7DE8A007B50C0 /* JKJProjectPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D37EEA1BB7DE8A007B50C0 /* JKJProjectPath.m */; settings = {ASSET_TAGS = (); }; };
-		04D37EED1BB7E275007B50C0 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D37EEC1BB7E275007B50C0 /* icon.png */; settings = {ASSET_TAGS = (); }; };
 		04D37EF01BB7E387007B50C0 /* JKJButtonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D37EEF1BB7E387007B50C0 /* JKJButtonViewController.m */; settings = {ASSET_TAGS = (); }; };
 		04DB02D41BB70C9E00669549 /* JKJProjectPath.xcscheme in Resources */ = {isa = PBXBuildFile; fileRef = 04DB02D31BB70C9E00669549 /* JKJProjectPath.xcscheme */; };
-		04DB02E51BB71D5000669549 /* Aspects.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DB02E41BB71D5000669549 /* Aspects.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		04D37EE91BB7DE8A007B50C0 /* JKJProjectPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKJProjectPath.h; sourceTree = "<group>"; };
 		04D37EEA1BB7DE8A007B50C0 /* JKJProjectPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = JKJProjectPath.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		04D37EEC1BB7E275007B50C0 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		04D37EEE1BB7E387007B50C0 /* JKJButtonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKJButtonViewController.h; sourceTree = "<group>"; };
 		04D37EEF1BB7E387007B50C0 /* JKJButtonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKJButtonViewController.m; sourceTree = "<group>"; };
 		04DB02CF1BB70C9E00669549 /* JKJProjectPath.xcplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JKJProjectPath.xcplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		04DB02D31BB70C9E00669549 /* JKJProjectPath.xcscheme */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = JKJProjectPath.xcscheme; path = JKJProjectPath.xcodeproj/xcshareddata/xcschemes/JKJProjectPath.xcscheme; sourceTree = SOURCE_ROOT; };
 		04DB02D91BB70C9E00669549 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		04DB02E31BB71D5000669549 /* Aspects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Aspects.h; sourceTree = "<group>"; };
-		04DB02E41BB71D5000669549 /* Aspects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Aspects.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -51,9 +46,6 @@
 				04D37EEE1BB7E387007B50C0 /* JKJButtonViewController.h */,
 				04D37EEF1BB7E387007B50C0 /* JKJButtonViewController.m */,
 				04D37EEA1BB7DE8A007B50C0 /* JKJProjectPath.m */,
-				04DB02E31BB71D5000669549 /* Aspects.h */,
-				04DB02E41BB71D5000669549 /* Aspects.m */,
-				04D37EEC1BB7E275007B50C0 /* icon.png */,
 				04DB02D91BB70C9E00669549 /* Info.plist */,
 				04DB02D21BB70C9E00669549 /* Supporting Files */,
 			);
@@ -125,7 +117,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04D37EED1BB7E275007B50C0 /* icon.png in Resources */,
 				04DB02D41BB70C9E00669549 /* JKJProjectPath.xcscheme in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -138,7 +129,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				04D37EEB1BB7DE8A007B50C0 /* JKJProjectPath.m in Sources */,
-				04DB02E51BB71D5000669549 /* Aspects.m in Sources */,
 				04D37EF01BB7E387007B50C0 /* JKJButtonViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
